@@ -15,11 +15,8 @@ class CreateUserProfileSerializer(serializers.ModelSerializer):
         fields = ["user_id", "first_name", "last_name"]
 
     def validate_user_id(self, value):
-        """
-        Ensure the user with the given user_id exists.
-        """
         try:
-            user = UserCredentials.objects.get(pk=value)
+            UserCredentials.objects.get(pk=value)
         except UserCredentials.DoesNotExist:
             raise serializers.ValidationError("The provided user ID does not exist.")
         return value
