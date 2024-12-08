@@ -11,7 +11,7 @@ ALLOWED_HOSTS = []
 
 CORS_ALLOWED_ORIGINS = ("http://localhost:3000",)
 
-# AUTH_USER_MODEL = "user_credentials.UserCredentials"
+AUTH_USER_MODEL = "user_credentials.UserCredentials"
 
 THIRD_PARTY_APPS = [
     "cities_light",
@@ -19,6 +19,7 @@ THIRD_PARTY_APPS = [
 
 CUSTOM_APPS = [
     "drf_react_gems_backend.user_credentials",
+    "drf_react_gems_backend.user_profile",
 ]
 
 INSTALLED_APPS = (
