@@ -1,9 +1,7 @@
 from django.db import (
     models,
 )
-from django.core.exceptions import (
-    ValidationError,
-)
+
 from django.contrib.auth.base_user import (
     AbstractBaseUser,
 )
@@ -14,10 +12,6 @@ from django.contrib.auth.models import (
 from drf_react_gems_backend.user_credentials.managers import (
     UserCredentialsManager,
 )
-
-# from drf_app.user_shipping_details.models import (
-#     UserShippingDetails,
-# )
 
 
 class UserCredentials(AbstractBaseUser, PermissionsMixin):
@@ -48,13 +42,3 @@ class UserCredentials(AbstractBaseUser, PermissionsMixin):
         help_text="Specific permissions for this user.",
         verbose_name="user permissions",
     )
-
-    def save(self, *args, **kwargs):
-        self.clean()
-
-        is_new = self.pk is None
-        super().save(*args, **kwargs)
-
-        if is_new:
-            # UserShippingDetails.objects.create(user=self)
-            pass
