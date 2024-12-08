@@ -1,10 +1,8 @@
 from rest_framework import serializers
-from django.contrib.auth.password_validation import validate_password
 from django.db import IntegrityError
 from rest_framework import serializers
-from django.contrib.auth import get_user_model
-
-UserModel = get_user_model()
+from drf_react_gems_backend.user_credentials.models import UserCredentials
+from drf_react_gems_backend.user_profile.models import UserProfile
 
 
 # class RegisterUserSerializer(serializers.Serializer):
@@ -63,32 +61,31 @@ UserModel = get_user_model()
 #         return user_credentials
 
 
-
-
-
-class RegisterUserSerializer(serializers.ModelSerializer):
+class CreateUserProfileSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(max_length=100)
+    last_name = serializers.CharField(max_length=100)
+    user_id = serializers.IntegerField()
+    
     class Meta:
-        model = UserModel
-        fields = (UserModel.USERNAME_FIELD, "password")
-        
-    def to_representation(self, instance):
-        data = super().to_representation(instance)
-        data.pop("password")
-        
-        data["user_id"] = instance.id  
-        return data
+        model = UserProfile
+        fields = ["user_id", "first_name", "last_name"]
 
-    def save(self, **kwargs):
-        user = super().save(*kwargs)
 
-        user.set_password(user.password)
-        user.save()
+    def create(self, validated_data):
+        """
+        Create the user profile linked to the user_id.
+        """
+        user_id = validated_data.get("user_id")
+        first_name = validated_data.get("first_name")
+        last_name = validated_data.get("last_name")
 
-        return user
+        user = UserCredentials.objects.get(pk=user_id)  # Fetch user credentials
 
-    def validate(self, attrs):
-        password = attrs.get("password", None)
-        try:
-            validate_password(password)
-        finally:
-            return attrs
+        # Create and return the user profile
+        user_profile = UserProfile.objects.create(
+            user=user,
+            first_name=first_name,
+            last_name=last_name,
+        )
+
+        return user_profile
