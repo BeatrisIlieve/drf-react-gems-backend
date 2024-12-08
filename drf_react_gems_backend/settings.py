@@ -17,17 +17,25 @@ THIRD_PARTY_APPS = [
     "cities_light",
 ]
 
-INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-    "rest_framework",
-    "rest_framework.authtoken",
-    "corsheaders",
-] + THIRD_PARTY_APPS
+CUSTOM_APPS = [
+    "drf_react_gems_backend.user_credentials",
+]
+
+INSTALLED_APPS = (
+    [
+        "django.contrib.admin",
+        "django.contrib.auth",
+        "django.contrib.contenttypes",
+        "django.contrib.sessions",
+        "django.contrib.messages",
+        "django.contrib.staticfiles",
+        "rest_framework",
+        "rest_framework.authtoken",
+        "corsheaders",
+    ]
+    + THIRD_PARTY_APPS
+    + CUSTOM_APPS
+)
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
