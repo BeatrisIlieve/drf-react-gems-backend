@@ -3,6 +3,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.db import IntegrityError
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from drf_react_gems_backend.user_profile.models import UserProfile
 
 UserModel = get_user_model()
 
@@ -16,7 +17,8 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         data.pop("password")
         
-        data["user_id"] = instance.id  
+        # data["user_id"] = instance.id  
+        
         return data
 
     def save(self, **kwargs):
@@ -24,15 +26,12 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
         user.set_password(user.password)
         user.save()
+        
+        # UserProfile.objects.create(
+        #     user=user,
+        # )
 
         return user
-
-    # def validate(self, attrs):
-    #     password = attrs.get("password", None)
-    #     try:
-    #         validate_password(password)
-    #     finally:
-    #         return attrs
     
     def validate(self, attrs):
         password = attrs.get("password", None)

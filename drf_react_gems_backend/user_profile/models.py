@@ -5,7 +5,7 @@ from drf_react_gems_backend.user_credentials.models import (
 )
 
 
-class UserProfile(models.Model):
+class UserProfile(models.Model):    
     user = models.OneToOneField(
         to=UserCredentials,
         primary_key=True,

@@ -1,12 +1,12 @@
 from django.urls import path
 
 
-from drf_react_gems_backend.user_profile.views import ApiCreateUserProfileView
+from drf_react_gems_backend.user_profile.views import UserProfileApiView
 
 urlpatterns = [
     path(
         "create/",
-        ApiCreateUserProfileView.as_view(),
-        name="api_create_user_profile_view",
+        UserProfileApiView.as_view(),
+        name="user_profile_api_view",
     ),
 ]
