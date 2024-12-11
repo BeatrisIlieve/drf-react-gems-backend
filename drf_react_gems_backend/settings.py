@@ -20,6 +20,7 @@ THIRD_PARTY_APPS = [
 CUSTOM_APPS = [
     "drf_react_gems_backend.user_credentials",
     "drf_react_gems_backend.user_profile",
+    "drf_react_gems_backend.product",
 ]
 
 INSTALLED_APPS = (
