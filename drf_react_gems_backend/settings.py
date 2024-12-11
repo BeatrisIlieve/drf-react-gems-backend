@@ -21,6 +21,7 @@ CUSTOM_APPS = [
     "drf_react_gems_backend.user_credentials",
     "drf_react_gems_backend.user_profile",
     "drf_react_gems_backend.product",
+    "drf_react_gems_backend.inventory",
 ]
 
 INSTALLED_APPS = (
