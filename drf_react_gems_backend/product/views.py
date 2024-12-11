@@ -1,5 +1,5 @@
 from rest_framework import generics as api_views
-from drf_react_gems_backend.product.models import Product
+from drf_react_gems_backend.inventory.models import Inventory
 from drf_react_gems_backend.product.serializers import (
     ProductListSerializer,
     ProductDetailsSerializer,
@@ -7,38 +7,38 @@ from drf_react_gems_backend.product.serializers import (
 
 
 class ProductListApiView(api_views.ListAPIView):
-    queryset = Product.objects.all()
+    queryset = Inventory.objects.all()
     serializer_class = ProductListSerializer
 
     def get_queryset(self):
 
         queryset = super().get_queryset()
 
-        category_id = self.request.query_params.get("category", None)
-        color_id = self.request.query_params.get("color", None)
+        category_pk = self.request.query_params.get("category", None)
+        color_pk = self.request.query_params.get("color", None)
 
-        if category_id and color_id:
-            queryset = Product.objects.represent_entity_into_products_list(
-                category_pk=category, color_pk=color
+        if category_pk and color_pk:
+            queryset = Inventory.objects.get_product_into_products_list(
+                category_pk=category_pk, color_pk=color_pk
             )
 
         return queryset
 
 
 class ProductDetailsApiView(api_views.ListAPIView):
-    queryset = Product.objects.all()
+    queryset = Inventory.objects.all()
     serializer_class = ProductDetailsSerializer
 
     def get_queryset(self):
 
         queryset = super().get_queryset()
 
-        category_id = self.request.query_params.get("category", None)
-        color_id = self.request.query_params.get("color", None)
+        category_pk = self.request.query_params.get("category", None)
+        color_pk = self.request.query_params.get("color", None)
 
-        if category_id and color_id:
-            queryset = Product.objects.represent_entity_into_product_page(
-                category_pk=category, color_pk=color
+        if category_pk and color_pk:
+            queryset = Inventory.objects.get_product_into_product_page(
+                category_pk=category_pk, color_pk=color_pk
             )
 
         return queryset

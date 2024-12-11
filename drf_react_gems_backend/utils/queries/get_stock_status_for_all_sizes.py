@@ -8,7 +8,7 @@ from django.db.models import (
 
 def get_stock_status_for_all_sizes():
     return Case(
-        When(total_quantity=0, then=Value("Sold Out")),
-        default=Value("In Stock"),
+        When(total_quantity=0, then=Value(True)),
+        default=Value(False),
         output_field=BooleanField(),
     )

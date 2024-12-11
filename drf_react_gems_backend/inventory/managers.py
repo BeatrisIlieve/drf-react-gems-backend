@@ -85,7 +85,7 @@ class InventoryManager(models.Manager):
                         inventory_id="id",
                         size="size",
                         price=Cast("price", output_field=CharField()),
-                        stock_status=get_stock_status_per_size(),
+                        is_sold_out=get_stock_status_per_size(),
                     ),
                     ordering=["size"],
                 ),
