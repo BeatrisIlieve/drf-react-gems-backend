@@ -9,8 +9,8 @@ class Category(models.Model):
         ("B", "Bracelets"),
         ("N", "Necklaces"),
         ("R", "Rings"),
-        ("P", "Pendants"),
         ("C", "Charms"),
+        ("P", "Pendants"),
     )
 
     title = models.CharField(
