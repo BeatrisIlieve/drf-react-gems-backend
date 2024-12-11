@@ -88,17 +88,48 @@ STRATEGY_MAPPER = {
 }
 
 
-class BaseProductApiView(api_views.ListAPIView):
-    strategy_type = None
+# class BaseProductApiView(api_views.ListAPIView):
+#     strategy_type = None
+
+#     def get_queryset(self):
+#         queryset = super().get_queryset()
+
+#         category_pk = self.request.query_params.get("category")
+#         color_pk = self.request.query_params.get("color")
+
+#         if category_pk and color_pk:
+#             context = InventoryFilterContext(self.strategy_type)
+#             queryset = context.execute(category_pk, color_pk)
+
+#         return queryset
+
+
+# class ProductListApiView(BaseProductApiView):
+#     queryset = Inventory.objects.all()
+#     serializer_class = ProductListSerializer
+#     strategy_type = ProductStrategyType.PRODUCT_LIST
+
+
+# class ProductDetailsApiView(BaseProductApiView):
+#     queryset = Inventory.objects.all()
+#     serializer_class = ProductDetailsSerializer
+#     strategy_type = ProductStrategyType.PRODUCT_DETAILS
+
+
+class BaseProductApiView(api_views.ListAPIView, ABC):
+    @abstractmethod
+    def get_strategy_type(self):
+        pass
 
     def get_queryset(self):
         queryset = super().get_queryset()
 
         category_pk = self.request.query_params.get("category")
         color_pk = self.request.query_params.get("color")
+        strategy_type = self.get_strategy_type()
 
         if category_pk and color_pk:
-            context = InventoryFilterContext(self.strategy_type)
+            context = InventoryFilterContext(strategy_type)
             queryset = context.execute(category_pk, color_pk)
 
         return queryset
@@ -107,10 +138,14 @@ class BaseProductApiView(api_views.ListAPIView):
 class ProductListApiView(BaseProductApiView):
     queryset = Inventory.objects.all()
     serializer_class = ProductListSerializer
-    strategy_type = ProductStrategyType.PRODUCT_LIST
+
+    def get_strategy_type(self):
+        return ProductStrategyType.PRODUCT_LIST
 
 
 class ProductDetailsApiView(BaseProductApiView):
     queryset = Inventory.objects.all()
     serializer_class = ProductDetailsSerializer
-    strategy_type = ProductStrategyType.PRODUCT_DETAILS
+
+    def get_strategy_type(self):
+        return ProductStrategyType.PRODUCT_DETAILS
