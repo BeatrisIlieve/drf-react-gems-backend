@@ -82,8 +82,14 @@ class InventoryFilterContext:
         return self.strategy.get_filtered_queryset(category_pk, color_pk)
 
 
+STRATEGY_MAPPER = {
+    ProductStrategyType.PRODUCT_LIST: ProductListStrategy,
+    ProductStrategyType.PRODUCT_DETAILS: ProductDetailsStrategy,
+}
+
+
 class BaseProductApiView(api_views.ListAPIView):
-    strategy_type = None  
+    strategy_type = None
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -108,9 +114,3 @@ class ProductDetailsApiView(BaseProductApiView):
     queryset = Inventory.objects.all()
     serializer_class = ProductDetailsSerializer
     strategy_type = ProductStrategyType.PRODUCT_DETAILS
-
-
-STRATEGY_MAPPER = {
-    ProductStrategyType.PRODUCT_LIST: ProductListStrategy,
-    ProductStrategyType.PRODUCT_DETAILS: ProductDetailsStrategy,
-}
