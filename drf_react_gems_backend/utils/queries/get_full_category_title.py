@@ -12,6 +12,8 @@ def get_full_category_title():
         When(product__category__title="B", then=Value("Bracelets")),
         When(product__category__title="N", then=Value("Necklaces")),
         When(product__category__title="R", then=Value("Rings")),
+        When(product__category__title="C", then=Value("Charms")),
+        When(product__category__title="P", then=Value("Pendants")),
         default=Value("Unknown Category"),
         output_field=CharField(),
     )
