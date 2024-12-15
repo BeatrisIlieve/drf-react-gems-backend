@@ -26,8 +26,8 @@ class UserEmailCheckApiView(APIView):
 
         if UserCredentials.objects.filter(email=email).exists():
             return Response(
-                {"email": "Email is already registered."},
-                status=status.HTTP_400_BAD_REQUEST,
+                {"registered": "Email is already registered."},
+                status=status.HTTP_200_OK,
             )
 
         validator = EmailValidator()
@@ -42,6 +42,7 @@ class UserEmailCheckApiView(APIView):
             )
 
         return Response(
+            {"not_registered": "Email is already registered."},
             status=status.HTTP_200_OK,
         )
 
