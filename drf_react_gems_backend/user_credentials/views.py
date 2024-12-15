@@ -17,7 +17,9 @@ from drf_react_gems_backend.user_credentials.models import UserCredentials
 
 class UserEmailCheckApiView(APIView):
     def post(self, request, *args, **kwargs):
-        serializer = UserEmailCheckSerializer(data=request.data, context={"request": request})
+        serializer = UserEmailCheckSerializer(
+            data=request.data, context={"request": request}
+        )
         serializer.is_valid(raise_exception=True)
 
         email = serializer.validated_data["email"]
@@ -38,6 +40,10 @@ class UserEmailCheckApiView(APIView):
                 {"error": "Please enter a valid email address."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+        return Response(
+            status=status.HTTP_200_OK,
+        )
 
 
 class RegisterUserApiView(api_views.CreateAPIView):
