@@ -1,7 +1,5 @@
 from django.db import models
 
-# from drf_react_gems_backend.product.managers import ProductManager
-
 
 class Category(models.Model):
     TITLE_CHOICES = (
@@ -39,8 +37,6 @@ class Color(models.Model):
 
 
 class Product(models.Model):
-
-    # objects = ProductManager()
 
     first_image_url = models.URLField()
 

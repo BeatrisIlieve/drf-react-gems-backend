@@ -13,14 +13,26 @@ from drf_react_gems_backend.user_credentials.managers import (
     UserCredentialsManager,
 )
 
+from django.utils.translation import gettext_lazy as _
+
+from django.core.validators import EmailValidator
+
+class CustomEmailValidator(EmailValidator):
+    message = _("Please enter a valid email address.") 
+
 
 class UserCredentials(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
 
     objects = UserCredentialsManager()
 
-    email = models.EmailField(
-        unique=True, error_messages={"invalid": "Please enter a valid email address"}
+    email = models.CharField(
+        max_length=255,
+        unique=True, 
+        validators=[CustomEmailValidator()],
+        error_messages={
+        "unique": "This email address is already registered"
+    }
     )
 
     is_staff = models.BooleanField(

@@ -7,6 +7,8 @@ from drf_react_gems_backend.user_profile.models import UserProfile
 
 UserModel = get_user_model()
 
+class UserEmailCheckSerializer(serializers.Serializer):
+    email = serializers.EmailField()
 
 class RegisterUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -41,7 +43,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         try:
             validate_password(password)
         except Exception as e:
-            raise serializers.ValidationError({"password": e})
+            raise serializers.ValidationError({"password": list(e)})
         
         return attrs
 
