@@ -53,22 +53,22 @@ class UserShippingDetails(BaseUserCharField):
     country = models.ForeignKey(
         to=Country,
         on_delete=models.DO_NOTHING,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
     )
 
     city = models.ForeignKey(
         to=City,
         on_delete=models.DO_NOTHING,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
     )
 
     region = models.ForeignKey(
         to=Region,
         on_delete=models.DO_NOTHING,
-        null=False,
-        blank=False,
+        null=True,
+        blank=True,
     )
 
     street_address = BaseUserCharField.create_char_field(
@@ -99,6 +99,6 @@ class UserShippingDetails(BaseUserCharField):
         to=UserCredentials,
         primary_key=True,
         on_delete=models.CASCADE,
-        related_name="user_profile",
+        related_name="user_shipping_details",
     )
 

@@ -42,7 +42,7 @@ class UserEmailCheckApiView(APIView):
             )
 
         return Response(
-            {"not_registered": "Email is already registered."},
+            {"not_registered": "Email is not registered yet."},
             status=status.HTTP_200_OK,
         )
 

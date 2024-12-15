@@ -4,37 +4,41 @@ from django.db import IntegrityError
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from drf_react_gems_backend.user_profile.models import UserProfile
+from drf_react_gems_backend.user_shipping_details.models import UserShippingDetails
 
 UserModel = get_user_model()
 
+
 class UserEmailCheckSerializer(serializers.Serializer):
     email = serializers.EmailField()
-
+    
 class RegisterUserSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(write_only=True)  # Handle first_name for ShippingDetails
+
     class Meta:
         model = UserModel
-        fields = (UserModel.USERNAME_FIELD, "password")
+        fields = (UserModel.USERNAME_FIELD, "password", "first_name")
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
-        data.pop("password")
-        
-        # data["user_id"] = instance.id  
-        
+        data.pop("password")  # Remove password from representation
         return data
 
-    def save(self, **kwargs):
-        user = super().save(*kwargs)
+    def create(self, validated_data):
+        # Extract first_name for shipping details
+        first_name = validated_data.pop('first_name', None)
 
-        user.set_password(user.password)
+        # Create the user with remaining data
+        user = UserModel.objects.create(**validated_data)
+        user.set_password(validated_data['password'])  # Hash the password
         user.save()
-        
-        # UserProfile.objects.create(
-        #     user=user,
-        # )
+
+        # Create the shipping details record if first_name is provided
+        if first_name:
+            UserShippingDetails.objects.create(user=user, first_name=first_name)
 
         return user
-    
+
     def validate(self, attrs):
         password = attrs.get("password", None)
         if not password:
@@ -44,21 +48,22 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             validate_password(password)
         except Exception as e:
             raise serializers.ValidationError({"password": list(e)})
-        
+
         return attrs
 
 
 
 # class RegisterUserSerializer(serializers.ModelSerializer):
+
 #     class Meta:
 #         model = UserModel
+#         fields = (UserModel.USERNAME_FIELD, "password", "first_name")
 #         fields = (UserModel.USERNAME_FIELD, "password")
-        
+
 #     def to_representation(self, instance):
 #         data = super().to_representation(instance)
 #         data.pop("password")
-        
-#         data["user_id"] = instance.id  
+
 #         return data
 
 #     def save(self, **kwargs):
@@ -68,7 +73,40 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 #         user.save()
 
 #         return user
-    
+
+#     def validate(self, attrs):
+#         password = attrs.get("password", None)
+#         if not password:
+#             raise serializers.ValidationError({"password": "Password is required."})
+
+#         try:
+#             validate_password(password)
+#         except Exception as e:
+#             raise serializers.ValidationError({"password": list(e)})
+
+#         return attrs
+
+
+# class RegisterUserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = UserModel
+#         fields = (UserModel.USERNAME_FIELD, "password")
+
+#     def to_representation(self, instance):
+#         data = super().to_representation(instance)
+#         data.pop("password")
+
+#         data["user_id"] = instance.id
+#         return data
+
+#     def save(self, **kwargs):
+#         user = super().save(*kwargs)
+
+#         user.set_password(user.password)
+#         user.save()
+
+#         return user
+
 #     def validate(self, attrs):
 #         password = attrs.get("password", None)
 #         try:

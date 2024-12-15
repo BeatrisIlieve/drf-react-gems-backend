@@ -34,8 +34,8 @@ APARTMENT_RULES = {
     "max_length": 10,
     "pattern": "^[A-Za-z0-9]([A-Za-z0-9\s\-\.]{0,6}[A-Za-z0-9])?$",
     "pattern_error_message": "This field can only contain letters, spaces, hyphens, and periods, and must start and end with a letter or digit",
-    "null": True,
-    "blank": True,
+    "null": False,
+    "blank": False,
 }
 
 POSTAL_CODE_RULES = {
