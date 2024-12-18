@@ -50,21 +50,21 @@ class UserShippingDetails(BaseUserCharField):
     #     blank_value=PHONE_NUMBER_RULES["blank"],
     # )
 
-    # country = models.ForeignKey(
-    #     to=Country,
-    #     on_delete=models.DO_NOTHING,
-    #     default="",
-    #     null=True,
-    #     blank=True,
-    # )
+    country = models.ForeignKey(
+        to=Country,
+        on_delete=models.DO_NOTHING,
+        default="",
+        null=True,
+        blank=True,
+    )
 
-    # city = models.ForeignKey(
-    #     to=City,
-    #     on_delete=models.DO_NOTHING,
-    #     default="",
-    #     null=True,
-    #     blank=True,
-    # )
+    city = models.ForeignKey(
+        to=City,
+        on_delete=models.DO_NOTHING,
+        default="",
+        null=True,
+        blank=True,
+    )
 
     # street_address = BaseUserCharField.create_char_field(
     #     max_length=STREET_ADDRESS_RULES["max_length"],

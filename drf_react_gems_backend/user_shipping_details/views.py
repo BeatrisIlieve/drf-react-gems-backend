@@ -6,7 +6,7 @@ from drf_react_gems_backend.user_shipping_details.serializers import (
 )
 
 from cities_light.models import Country, City
-from drf_react_gems_backend.user_shipping_details.serializers import CountrySerializer
+from drf_react_gems_backend.user_shipping_details.serializers import CountrySerializer, CitySerializer
 
 from rest_framework import status
 from rest_framework.views import APIView
@@ -20,6 +20,11 @@ from rest_framework import generics
 class CountryListApiView(api_views.ListAPIView):
     queryset = Country.objects.all().order_by("name")
     serializer_class = CountrySerializer
+    
+
+class CityListApiView(api_views.ListAPIView):
+    queryset = City.objects.all().order_by("name")
+    serializer_class = CitySerializer
 
 
 class UserShippingDetailsApiView(

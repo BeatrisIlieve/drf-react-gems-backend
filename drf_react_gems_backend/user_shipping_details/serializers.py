@@ -12,6 +12,12 @@ class CountrySerializer(serializers.ModelSerializer):
         fields = ["id", "name"]
 
 
+class CitySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = City
+        fields = ["id", "name"]
+
+
 class UserShippingDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserShippingDetails
