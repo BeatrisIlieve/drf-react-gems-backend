@@ -6,14 +6,18 @@ from django.contrib.auth import get_user_model
 from drf_react_gems_backend.user_profile.models import UserProfile
 from drf_react_gems_backend.user_shipping_details.models import UserShippingDetails
 
+
 UserModel = get_user_model()
 
 
 class UserEmailCheckSerializer(serializers.Serializer):
     email = serializers.EmailField()
-    
+
+
 class RegisterUserSerializer(serializers.ModelSerializer):
-    first_name = serializers.CharField(write_only=True)  # Handle first_name for ShippingDetails
+    first_name = serializers.CharField(
+        write_only=True
+    )  # Handle first_name for ShippingDetails
 
     class Meta:
         model = UserModel
@@ -26,16 +30,17 @@ class RegisterUserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         # Extract first_name for shipping details
-        first_name = validated_data.pop('first_name', None)
+        first_name = validated_data.pop("first_name", None)
+        
+        if not first_name:
+            raise serializers.ValidationError({"first_name": "First name is required."})
 
         # Create the user with remaining data
         user = UserModel.objects.create(**validated_data)
-        user.set_password(validated_data['password'])  # Hash the password
+        user.set_password(validated_data["password"])  # Hash the password
         user.save()
 
-        # Create the shipping details record if first_name is provided
-        if first_name:
-            UserShippingDetails.objects.create(user=user, first_name=first_name)
+        UserShippingDetails.objects.create(user=user, first_name=first_name)
 
         return user
 
@@ -50,7 +55,6 @@ class RegisterUserSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({"password": list(e)})
 
         return attrs
-
 
 
 # class RegisterUserSerializer(serializers.ModelSerializer):

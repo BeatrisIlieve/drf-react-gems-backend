@@ -11,3 +11,5 @@
 11. python manage.py migrate  
 12. ./manage.py migrate
 13. ./manage.py cities_light
+14. python manage.py initialize_products_data
+15. python manage.py initialize_inventory_data

@@ -17,8 +17,9 @@ from django.utils.translation import gettext_lazy as _
 
 from django.core.validators import EmailValidator
 
+
 class CustomEmailValidator(EmailValidator):
-    message = _("Please enter a valid email address.") 
+    message = _("Please enter a valid email address.")
 
 
 class UserCredentials(AbstractBaseUser, PermissionsMixin):
@@ -28,11 +29,9 @@ class UserCredentials(AbstractBaseUser, PermissionsMixin):
 
     email = models.CharField(
         max_length=255,
-        unique=True, 
+        unique=True,
         validators=[CustomEmailValidator()],
-        error_messages={
-        "unique": "This email address is already registered"
-    }
+        error_messages={"unique": "This email address is already registered"},
     )
 
     is_staff = models.BooleanField(
