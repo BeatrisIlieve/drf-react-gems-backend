@@ -66,29 +66,29 @@ class UserShippingDetails(BaseUserCharField):
         blank=True,
     )
 
-    # street_address = BaseUserCharField.create_char_field(
-    #     max_length=STREET_ADDRESS_RULES["max_length"],
-    #     pattern=STREET_ADDRESS_RULES["pattern"],
-    #     pattern_error_message=STREET_ADDRESS_RULES["pattern_error_message"],
-    #     null_value=STREET_ADDRESS_RULES["null"],
-    #     blank_value=STREET_ADDRESS_RULES["blank"],
-    # )
+    street_address = BaseUserCharField.create_char_field(
+        max_length=STREET_ADDRESS_RULES["max_length"],
+        pattern=STREET_ADDRESS_RULES["pattern"],
+        pattern_error_message=STREET_ADDRESS_RULES["pattern_error_message"],
+        null_value=STREET_ADDRESS_RULES["null"],
+        blank_value=STREET_ADDRESS_RULES["blank"],
+    )
 
-    # apartment = BaseUserCharField.create_char_field(
-    #     max_length=APARTMENT_RULES["max_length"],
-    #     pattern=APARTMENT_RULES["pattern"],
-    #     pattern_error_message=APARTMENT_RULES["pattern_error_message"],
-    #     null_value=APARTMENT_RULES["null"],
-    #     blank_value=APARTMENT_RULES["blank"],
-    # )
+    apartment = BaseUserCharField.create_char_field(
+        max_length=APARTMENT_RULES["max_length"],
+        pattern=APARTMENT_RULES["pattern"],
+        pattern_error_message=APARTMENT_RULES["pattern_error_message"],
+        null_value=APARTMENT_RULES["null"],
+        blank_value=APARTMENT_RULES["blank"],
+    )
 
-    # postal_code = BaseUserCharField.create_char_field(
-    #     max_length=POSTAL_CODE_RULES["max_length"],
-    #     pattern=POSTAL_CODE_RULES["pattern"],
-    #     pattern_error_message=POSTAL_CODE_RULES["pattern_error_message"],
-    #     null_value=POSTAL_CODE_RULES["null"],
-    #     blank_value=POSTAL_CODE_RULES["blank"],
-    # )
+    postal_code = BaseUserCharField.create_char_field(
+        max_length=POSTAL_CODE_RULES["max_length"],
+        pattern=POSTAL_CODE_RULES["pattern"],
+        pattern_error_message=POSTAL_CODE_RULES["pattern_error_message"],
+        null_value=POSTAL_CODE_RULES["null"],
+        blank_value=POSTAL_CODE_RULES["blank"],
+    )
 
     user = models.OneToOneField(
         to=UserCredentials,
