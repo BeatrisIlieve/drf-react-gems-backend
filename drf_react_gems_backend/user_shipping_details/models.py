@@ -34,21 +34,21 @@ class UserShippingDetails(BaseUserCharField):
         blank_value=FIRST_NAME_RULES["blank"],
     )
 
-    # last_name = BaseUserCharField.create_char_field(
-    #     max_length=LAST_NAME_RULES["max_length"],
-    #     pattern=LAST_NAME_RULES["pattern"],
-    #     pattern_error_message=LAST_NAME_RULES["pattern_error_message"],
-    #     null_value=LAST_NAME_RULES["null"],
-    #     blank_value=LAST_NAME_RULES["blank"],
-    # )
+    last_name = BaseUserCharField.create_char_field(
+        max_length=LAST_NAME_RULES["max_length"],
+        pattern=LAST_NAME_RULES["pattern"],
+        pattern_error_message=LAST_NAME_RULES["pattern_error_message"],
+        null_value=LAST_NAME_RULES["null"],
+        blank_value=LAST_NAME_RULES["blank"],
+    )
 
-    # phone_number = BaseUserCharField.create_char_field(
-    #     max_length=PHONE_NUMBER_RULES["max_length"],
-    #     pattern=PHONE_NUMBER_RULES["pattern"],
-    #     pattern_error_message=PHONE_NUMBER_RULES["pattern_error_message"],
-    #     null_value=PHONE_NUMBER_RULES["null"],
-    #     blank_value=PHONE_NUMBER_RULES["blank"],
-    # )
+    phone_number = BaseUserCharField.create_char_field(
+        max_length=PHONE_NUMBER_RULES["max_length"],
+        pattern=PHONE_NUMBER_RULES["pattern"],
+        pattern_error_message=PHONE_NUMBER_RULES["pattern_error_message"],
+        null_value=PHONE_NUMBER_RULES["null"],
+        blank_value=PHONE_NUMBER_RULES["blank"],
+    )
 
     country = models.ForeignKey(
         to=Country,

@@ -25,6 +25,19 @@ class CountryListApiView(api_views.ListAPIView):
 class CityListApiView(api_views.ListAPIView):
     queryset = City.objects.all().order_by("name")
     serializer_class = CitySerializer
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()  # Retrieve the default queryset
+
+        # Check if 'country' parameter is provided in the query parameters
+        country_id = self.request.query_params.get('country', None)
+
+        if country_id is not None:
+            # Filter the queryset by country_id
+            queryset = queryset.filter(country_id=country_id)
+        
+        return queryset
+    
 
 
 class UserShippingDetailsApiView(
